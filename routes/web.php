@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\JobModel;
+use App\Models\SpecialtiesModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,17 +14,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', function () {
+//    $ret = [
+//        'spec' => [
+//            ['title' => "title1"],
+//            ['title' => "title2"]
+//        ],  'jobTypes' => [
+//            ['title' => "title1", "jobs" => [['jobTitle' => "title1"], ['jobTitle' => "title1"]]],
+//            ['title' => "title1", "jobs" => [['jobTitle' => "title1"], ['jobTitle' => "title1"]]],
+//            ['title' => "title1", "jobs" => [['jobTitle' => "title1"], ['jobTitle' => "title1"], ['jobTitle' => "title1"]]],
+//        ]
+//    ];
+    return \App\Models\WorkerModel::getAll();
+//    return \App\Http\Controllers\JobController::getAllWithSpec();
 
+
+});
 Route::get('/', function () {
-    return view('home', ['spec' => [
-        ['title' => "title1"],
-        ['title' => "title2"]
-    ],  'jobTypes' => [
-        ['title' => "title1", "jobs" => [['jobTitle' => "title1"], ['jobTitle' => "title1"]]],
-        ['title' => "title1", "jobs" => [['jobTitle' => "title1"], ['jobTitle' => "title1"]]],
-        ['title' => "title1", "jobs" => [['jobTitle' => "title1"], ['jobTitle' => "title1"], ['jobTitle' => "title1"]]],
-    ]
-    ]);
+    return \App\Http\Controllers\SpecialitiesController::index();
 });
 
 Route::get('/workers', function (){
@@ -30,7 +39,8 @@ Route::get('/workers', function (){
         [
             'full' => true,
             'name' => "sasha",
-            'tags' => ['Сантехник', 'Электрик'],
+            'profile-photo' => 'images/image1.png',
+            'sub-specialty' => ['Сантехник', 'Электрик'],
             'location' => 'spb, mina st.',
             'rating' => ['likes'=>2, 'dislikes' => 3, 'rate' => 40],
             'examples' => ['images/image1.png', 'images/image1.png'],
@@ -40,7 +50,8 @@ Route::get('/workers', function (){
         [
             'full' => true,
             'name' => "sasha",
-            'tags' => ['Сантехник', 'Электрик'],
+            'profile-photo' => 'images/image1.png',
+            'sub-specialty' => ['Сантехник', 'Электрик'],
             'location' => 'spb, mina st.',
             'rating' => ['likes'=>2, 'dislikes' => 3, 'rate' => 40],
             'examples' => ['images/image1.png', 'images/image1.png'],
@@ -49,8 +60,12 @@ Route::get('/workers', function (){
     ]]);
 });
 
-Route::get('/workers/{id}', function (){
-    return view('worker-card', [ 'item' =>
+Route::get('/workers/cat/{id}', function ($id){
+    return \App\Http\Controllers\WorkerConroller::getAll([$id]);
+});
+
+Route::get('/workers/{id}', function ($id){
+    return view('worker-card', [ 'id' => $id, 'item' =>
         [
             'name' => "sasha",
             'profile-photo' => 'images/image1.png',
@@ -80,4 +95,8 @@ Route::get('/workers/{id}', function (){
             ]
 
         ]]);
+});
+
+Route::get('/specialties/{id}', function ($id){
+    return \App\Http\Controllers\JobController::indexBySpec($id);
 });

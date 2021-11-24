@@ -16,7 +16,11 @@
                                       <div class="col-lg-2 col-sm-4 col-6 d-flex">
                                         <a href="#" class="element text-center">
                                             <div class="img-wrapper">
-                                                <img src="{{ asset('/images/cat.png') }}" alt="">
+                                                @if(isset($item['icon']) && $item['icon'])
+                                                    <img src="{{ Config::get("app.api-name") }}{{ $item['icon'] }}" alt="">
+                                                @else
+                                                    <img src="{{ asset('/images/cat.png') }}" alt="">
+                                                @endif
                                             </div>
                                             <div class="title">{{ $item['title'] }}</div>
                                         </a>
@@ -33,12 +37,13 @@
 
                                         <div class="col-md-4">
                                             <div class="element">
-                                                <h3>{{ $item['title'] }}</h3>
+                                                <h3><a href="/specialties/{{ $item['id'] }}">{{ $item['title'] }}</a> </h3>
                                                 <ul>
-                                                    @foreach($item['jobs'] as $job)
-                                                        <li><a href="/">{{ $job['jobTitle'] }}</a></li>
-                                                    @endforeach
-
+                                                    @isset($item['jobs'] )
+                                                        @foreach($item['jobs'] as $job)
+                                                            <li><a href="/sub-specialties/{{ $job['id'] }}">{{ $job['jobTitle'] }}</a></li>
+                                                        @endforeach
+                                                    @endisset
                                                 </ul>
                                             </div>
                                         </div>

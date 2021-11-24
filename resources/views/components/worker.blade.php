@@ -1,4 +1,4 @@
-<div class="element spec-board @if($item['full']) full-active @endif"><!--РАСКРЫТЫЙ-->
+<div class="element spec-board  full-active"><!--РАСКРЫТЫЙ-->
     <a href="/" class="showFull">
         <svg width="9" height="12" class="svg-icon">
             <use xlink:href="{{ asset('icons/icons.svg#full') }}"></use>
@@ -6,13 +6,19 @@
     </a>
     <div class="el-head spec-info">
         <div class="img-wrapper">
-            <img src="{{ asset($item['profile-photo']) }}" alt="">
+
+            @if(isset($item['profile-photo']) && $item['profile-photo'])
+                <img src="{{ Config::get("app.api-name") }}{{ $item['profile-photo'] }}" alt="">
+            @else
+                <img src="{{ asset('images/image1.png') }}" alt="">
+
+            @endif
         </div>
         <div class="name">
             <h3><a href="#">{{ $item['name'] }}</a><i class="fas fa-check text-success"></i></h3>
         </div>
         <div class="tags">
-            @foreach($item['tags'] as $tag) {{ $tag }} @endforeach
+            @foreach($item['sub-specialty'] as $tag) {{ $tag }} @endforeach
         </div>
         <div class="location">
             <i class="fas fa-map-marker-alt me-2"></i>{{ $item['location'] }}
@@ -78,6 +84,7 @@
 
                 </div>
             </div>
+            @isset($item['last-review']['text'] )
             <div class="fd-element">
                 <div class="title-default title-default--feedback">Отзывы</div>
                 <div class="desc">
@@ -91,10 +98,12 @@
                         </div>
                     </div>
                     <div class="review-button">
-                        <a href="/">Все отзывы (15)</a>
+                        <a href="/">Все отзывы ({{ $item['reviewsCount'] }})</a>
                     </div>
                 </div>
             </div>
+
+            @endisset
         </div>
     </div>
     <div class="card-webstore">

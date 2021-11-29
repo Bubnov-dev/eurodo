@@ -28,7 +28,7 @@
                                         </svg>
                                     </a>
                                     <div class="el-title">
-                                        <h3>{{ $job['title'] }}</h3>
+                                        <h3><a href="jobs/{{ $job['id'] }}">{{ $job['title'] }}</a></h3>
                                         <div class="price">€{{ $job['price'] }}</div>
                                     </div>
                                     <div class="el-desc">

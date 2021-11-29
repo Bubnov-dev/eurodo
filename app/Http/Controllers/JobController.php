@@ -50,6 +50,28 @@ class JobController extends Controller
 
     }
 
+    public function getAllByParams(Request $request)
+    {
+        $specStr = $request->get('specialties');
+        $specialties = explode(" ", $request->get('specialties'));
+
+        $rowData = JobModel::getBySpec($specialties);
+        $clearData = [];
+
+        foreach ($rowData as $index => $job){
+            $clearData['jobs'][$index]['id'] = $job['_id'];
+            $clearData['jobs'][$index]['title'] = $job['title'];
+            $clearData['jobs'][$index]['price'] = $job['price'];
+            $clearData['jobs'][$index]['desc'] = $job['description'];
+            $clearData['jobs'][$index]['location'] = $job['location']['address'];
+            $clearData['jobs'][$index]['date-time'] = $job['createAt'];
+        }
+
+        return view('jobsList', $clearData);
+
+    }
+
+
     public static function getAllWithSpec(){
         $rowData = JobModel::getAll();
         $clearData = [];
@@ -67,6 +89,9 @@ class JobController extends Controller
         return $clearData;
     }
 
+    public static function getParams(Request $request){
+        return $request->get('spec');
+    }
     /**
      * Show the form for creating a new resource.
      *

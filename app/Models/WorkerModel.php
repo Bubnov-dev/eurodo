@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\Http;
 
 class WorkerModel extends BaseApiModel
+
 {
     /**
      *
@@ -19,8 +20,7 @@ class WorkerModel extends BaseApiModel
                                       "longitude" => 34.1059989
                                   ],
                                   $page = 0,
-                                  $size = 20)
-    {
+                                  $size = 20){
 
         $response = Http::post('https://dev.eurodo.es/api/v1/searches/users', [
             "q" => "",
@@ -54,6 +54,7 @@ class WorkerModel extends BaseApiModel
              * todo change request to /api/v1/userSpecialties/byUserId/{_id}
              *
              */
+            $workers[$i]['id'] = $userFull['_id'];
             $workers[$i]['name'] = $userFull['profile']['firstname'] . " " . $userFull['profile']['lastname'];
             $workers[$i]['profile-photo'] = $userFull["profile"]['avatar'];
             $k = 0;
@@ -110,4 +111,13 @@ class WorkerModel extends BaseApiModel
          * ]
          */
     }
+
+
+    function getById($id){
+        $response = Http::acceptJson()->get("https://dev.eurodo.es/api/v1/users/".$id."/full");
+
+        return $response->json();
+
+    }
 }
+

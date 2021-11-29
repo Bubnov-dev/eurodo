@@ -15,7 +15,7 @@
             @endif
         </div>
         <div class="name">
-            <h3><a href="#">{{ $item['name'] }}</a><i class="fas fa-check text-success"></i></h3>
+            <h3><a href="/workers/{{ $item['id'] }}">{{ $item['name'] }}</a><i class="fas fa-check text-success"></i></h3>
         </div>
         <div class="tags">
             @foreach($item['sub-specialty'] as $tag) {{ $tag }} @endforeach

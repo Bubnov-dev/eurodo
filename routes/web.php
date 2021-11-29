@@ -65,38 +65,21 @@ Route::get('/workers/cat/{id}', function ($id){
 });
 
 Route::get('/workers/{id}', function ($id){
-    return view('worker-card', [ 'id' => $id, 'item' =>
-        [
-            'name' => "sasha",
-            'profile-photo' => 'images/image1.png',
-            'location' => 'spb, mina st.',
-            'rating' => ['average' => '1.3','likes'=>2, 'dislikes' => 3, 'rate' => 40],
-            'profile-desc' => 'bla blaa lsla lala',
-            'examples' => ['images/image2.png', 'images/image1.png'],
-            'specialties' => [
-                [
-                    'title' => 'spec1',
-                    'jobs' => ['job1', 'job2', 'job3']
-                ]
-            ],
-            'reviews' => [
-                [
-                    'user' => [
-                        'photo' => 'images/image1.png',
-                        'name' => 'name',
-                        'likes' => 12,
-                        'dislikes' => 2,
-                    ],
-                    'rate' => 32,
-                    'job-title' => 'title',
-                    'text' => 'хуева, не понравилось',
-                    'date' => '12.12.12'
-                ]
-            ]
-
-        ]]);
+    return \App\Http\Controllers\WorkerConroller::getOne($id);
 });
 
+
+//todo delete
 Route::get('/specialties/{id}', function ($id){
     return \App\Http\Controllers\JobController::indexBySpec($id);
+});
+
+
+Route::get('/jobs', function (\Illuminate\Http\Request $request) {
+    return \App\Http\Controllers\JobController::getAllByParams($request);
+});
+
+
+Route::get('/req', function (\Illuminate\Http\Request $request) {
+    return \App\Http\Controllers\JobController::getParams($request);
 });

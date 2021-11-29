@@ -970,7 +970,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .spec-board .spec-info .webstore-group {
     margin-top: 0.75rem;
-    margin-bottom: calc(-0.75rem + -35px);
+    /*margin-bottom: calc(-0.75rem + -35px);*/
 }
 
 .spec-board.spec-board-page .spec-info .webstore-group {
@@ -1032,6 +1032,7 @@ input[type="search"]::-webkit-search-cancel-button {
     background: url(../../../last4/../icons/ratings-wrapper.svg) no-repeat left center;
     background-size: 73px 14px;
     display: block;
+    padding: 0;
 }
 
 .reviews-raiting.small {
